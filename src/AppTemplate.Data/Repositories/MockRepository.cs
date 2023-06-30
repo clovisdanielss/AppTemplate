@@ -16,11 +16,11 @@ namespace AppTemplate.Data.Repositories
         }
         public async Task Add(T item)
         {
-            item.Id = Guid.NewGuid().ToString();
+            item.Id = Guid.NewGuid();
             repository.Add(item);
         }
 
-        public async Task DeleteById(string id)
+        public async Task DeleteById(Guid id)
         {
             var toDelete = repository.FirstOrDefault(i => i.Id == id);
             if (toDelete != null)
@@ -38,7 +38,7 @@ namespace AppTemplate.Data.Repositories
             return repository.ToList();
         }
 
-        public async Task<T> GetById(string id)
+        public async Task<T> GetById(Guid id)
         {
             return repository.FirstOrDefault(i => i.Id == id);
         }

@@ -16,7 +16,7 @@ public class TestController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetHelloWorld([FromServices] IService<IJwt> service)
+    public async Task<ActionResult> GetHelloWorld([FromServices] IService<Jwt> service)
     {
         return Ok(service.Handle());
     }

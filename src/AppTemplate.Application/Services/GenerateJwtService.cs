@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace AppTemplate.Application.Services;
 
 
-public class GenerateJwtService : IService<IJwt>
+public class GenerateJwtService : IService<Jwt>
 {
     private readonly IJwtConfiguration appSettings;
     public GenerateJwtService(IJwtConfiguration appSettings)
@@ -17,12 +17,12 @@ public class GenerateJwtService : IService<IJwt>
         this.appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
     }
 
-    public IServiceOutput<IJwt> Handle()
+    public IServiceOutput<Jwt> Handle()
     {
-        return new ServiceOutput<IJwt>(Generate());
+        return new ServiceOutput<Jwt>(Generate());
     }
 
-    private IJwt Generate()
+    private Jwt Generate()
     {
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(appSettings.Secret));
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
@@ -33,7 +33,7 @@ public class GenerateJwtService : IService<IJwt>
                       signingCredentials: credentials);
         string tokenWrited = new JwtSecurityTokenHandler().WriteToken(token);
         return new Jwt{
-            Id = Guid.NewGuid().ToString(),
+            Id = Guid.NewGuid(),
             Token = tokenWrited
         };
     }

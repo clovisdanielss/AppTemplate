@@ -8,6 +8,6 @@ namespace AppTemplate.Shared.Interfaces
 {
     public interface IEntity
     {
-        public string Id { get; set; }
+        Guid Id { get; set; }
     }
 }

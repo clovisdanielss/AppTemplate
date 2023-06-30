@@ -22,7 +22,7 @@ builder.Services.AddSingleton<IJwtConfiguration>(configuration);
 //builder.Services.AddTransient<IUserStore<User>, UserStoreService>();
 //builder.Services.AddTransient<IRoleStore<Role>, RoleStoreService>();
 //builder.Services.AddIdentity<User, Role>().AddDefaultTokenProviders();
-builder.Services.AddScoped<IService<IJwt>, GenerateJwtService>();
+builder.Services.AddScoped<IService<Jwt>, GenerateJwtService>();
 builder.Services.AddJwt(configuration);
 
 var app = builder.Build();
