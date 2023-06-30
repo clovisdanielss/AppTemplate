@@ -3,7 +3,7 @@
 namespace AppTemplate.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class MainController: ControllerBase
+    public class MainController : ControllerBase
     {
         protected readonly ILogger<TestController> _logger;
 

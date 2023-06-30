@@ -1,8 +1,6 @@
-using AppTemplate.Application.Interfaces;
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppTemplate.Controllers;
@@ -29,7 +27,7 @@ public class TestController : MainController
     [HttpGet("CreateUser")]
     public async Task<ActionResult> GetCreatedUser()
     {
-        
+
         return Ok();
     }
 }

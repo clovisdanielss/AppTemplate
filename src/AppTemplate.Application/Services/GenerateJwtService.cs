@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using AppTemplate.Application.Interfaces;
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
 using AppTemplate.Shared.Models;
@@ -32,7 +31,8 @@ public class GenerateJwtService : IService<Jwt>
                       expires: DateTime.UtcNow.AddMinutes(appSettings.ExpirationTime),
                       signingCredentials: credentials);
         string tokenWrited = new JwtSecurityTokenHandler().WriteToken(token);
-        return new Jwt{
+        return new Jwt
+        {
             Id = Guid.NewGuid(),
             Token = tokenWrited
         };

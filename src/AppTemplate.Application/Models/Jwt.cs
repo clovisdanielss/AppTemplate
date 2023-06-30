@@ -1,4 +1,3 @@
-using AppTemplate.Application.Interfaces;
 using AppTemplate.Shared.Interfaces;
 
 namespace AppTemplate.Application.Models;

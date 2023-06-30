@@ -10,7 +10,8 @@ public class ServiceOutput<T> : IServiceOutput<T> where T : IEntity
         Result = result;
     }
 
-    public ServiceOutput(string error){
+    public ServiceOutput(string error)
+    {
         Messages = new List<string>();
         Messages.Add(error);
     }

@@ -5,7 +5,6 @@ using AppTemplate.Data.Repositories;
 using AppTemplate.Extensions;
 using AppTemplate.Models;
 using AppTemplate.Shared.Interfaces;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
