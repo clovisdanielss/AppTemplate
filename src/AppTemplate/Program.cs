@@ -1,7 +1,3 @@
-using AppTemplate.Application.Interfaces;
-using AppTemplate.Application.Models;
-using AppTemplate.Application.Services;
-using AppTemplate.Data.Repositories;
 using AppTemplate.Extensions;
 using AppTemplate.Models;
 using AppTemplate.Shared.Interfaces;
@@ -15,14 +11,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
-builder.Services.AddScoped<IUserRepository, MockUserRepository>();
-builder.Services.AddScoped<IRoleRepository, MockRoleRepository>();
-builder.Services.AddSingleton<IJwtConfiguration>(configuration);
-//builder.Services.AddTransient<IUserStore<User>, UserStoreService>();
-//builder.Services.AddTransient<IRoleStore<Role>, RoleStoreService>();
-//builder.Services.AddIdentity<User, Role>().AddDefaultTokenProviders();
-builder.Services.AddScoped<IService<Jwt>, GenerateJwtService>();
+builder.Services.AddSingleton(configuration);
 builder.Services.AddJwt(configuration);
+builder.Services.AddServices();
+builder.Services.AddProfiles();
 
 var app = builder.Build();
 

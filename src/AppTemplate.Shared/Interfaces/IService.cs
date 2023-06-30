@@ -1,11 +1,11 @@
 namespace AppTemplate.Shared.Interfaces;
 
-public interface IService<Input, Output> where Input : IEntity where Output : IEntity
+public interface IService<Input, Output>
 {
-    IServiceOutput<Output> Handle(Input input);
+    Task<Output> HandleAsync(Input input);
 }
 
-public interface IService<Output> where Output : IEntity
+public interface IService<Output>
 {
-    IServiceOutput<Output> Handle();
+    Task<Output> HandleAsync();
 }

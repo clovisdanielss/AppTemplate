@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
-using AppTemplate.Shared.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AppTemplate.Application.Services;
@@ -16,9 +15,9 @@ public class GenerateJwtService : IService<Jwt>
         this.appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
     }
 
-    public IServiceOutput<Jwt> Handle()
+    public async Task<Jwt> HandleAsync()
     {
-        return new ServiceOutput<Jwt>(Generate());
+        return Generate();
     }
 
     private Jwt Generate()
