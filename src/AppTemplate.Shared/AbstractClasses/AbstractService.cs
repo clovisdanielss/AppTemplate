@@ -16,8 +16,8 @@ namespace AppTemplate.Shared.AbstractClasses
             _notifier.Notify(notification);
         }
 
-        protected async Task<bool> IsValid<V, E>(V validator, E entity) where V : IValidator<E>
-                                                                 where E : IEntity
+        protected virtual async Task<bool> IsValid<V, E>(V validator, E entity) where V : IValidator<E>
+                                                                 where E : class
         {
             var validation = validator.Validate(entity);
             if (validation.IsValid)

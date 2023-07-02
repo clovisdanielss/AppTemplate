@@ -16,6 +16,7 @@ public class CreateUserService : AbstractService, IProcedure<UsernameAndPassword
     }
     public async Task HandleAsync(UsernameAndPassword input)
     {
+        if (!await IsValid(new UsernameAndPasswordValidator(), input)) return;
         var hashString = PasswordHasher.GeneratePasswordHashString(input.Password);
         var user = new User
         {
@@ -28,6 +29,5 @@ public class CreateUserService : AbstractService, IProcedure<UsernameAndPassword
             await _userRepository.Add(user);
         }
     }
-
 
 }
