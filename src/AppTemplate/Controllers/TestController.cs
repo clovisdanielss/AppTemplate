@@ -11,7 +11,7 @@ namespace AppTemplate.Controllers;
 [Route("api/[controller]")]
 public class TestController : MainController
 {
-    public TestController(ILogger<TestController> logger, IMapper mapper) : base(logger, mapper)
+    public TestController(ILogger<TestController> logger, IMapper mapper, INotifier notifier) : base(logger, mapper, notifier)
     {
     }
 
@@ -28,10 +28,14 @@ public class TestController : MainController
     }
 
     [HttpPost("CreateUser")]
-    public async Task<ActionResult> GetCreatedUser(UsernameAndPassworModel model, [FromServices] IService<UsernameAndPassword, User> service)
+    public async Task<ActionResult> GetCreatedUser(UsernameAndPassworModel model, [FromServices] IProcedure<UsernameAndPassword> service)
     {
         var input = _mapper.Map<UsernameAndPassword>(model);
-        var result = await service.HandleAsync(input);
-        return Ok(result);
+        await service.HandleAsync(input);
+        if (HasAnyError)
+        {
+            return BadRequest();
+        }
+        return Created("", null);
     }
 }

@@ -14,6 +14,7 @@ namespace AppTemplate.Extensions
             service.AddScoped<IRoleRepository, MockRoleRepository>();
             service.AddScoped<IProcedure<UsernameAndPassword>, CreateUserService>();
             service.AddScoped<IService<Jwt>, GenerateJwtService>();
+            service.AddScoped<INotifier, NotifierService>();
 
             return service;
         }
