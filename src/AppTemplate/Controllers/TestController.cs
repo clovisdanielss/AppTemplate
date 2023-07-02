@@ -1,3 +1,4 @@
+using AppTemplate.Application.Interfaces;
 using AppTemplate.Application.Models;
 using AppTemplate.Models;
 using AppTemplate.Shared.Interfaces;
@@ -18,13 +19,13 @@ public class TestController : MainController
     [HttpGet]
     public async Task<ActionResult> GetHelloWorld(UsernameAndPassworModel model, [FromServices] IService<Jwt> service)
     {
-        return Ok(await service.HandleAsync());
+        return CustomResponse(await service.HandleAsync());
     }
     [Authorize]
     [HttpGet("teste/auth")]
     public async Task<ActionResult> GetHelloWorldAuth()
     {
-        return Ok("Hello World - Authorized");
+        return CustomResponse("Hello World - Authorized");
     }
 
     [HttpPost("CreateUser")]
@@ -32,10 +33,11 @@ public class TestController : MainController
     {
         var input = _mapper.Map<UsernameAndPassword>(model);
         await service.HandleAsync(input);
-        if (HasAnyError)
-        {
-            return BadRequest();
-        }
-        return Created("", null);
+        return CustomResponse(success: (result) => Created("", result));
+    }
+    [HttpGet("AllUsers")]
+    public async Task<ActionResult> GetAllUsers([FromServices] IUserRepository service)
+    {
+        return CustomResponse(await service.GetAll());
     }
 }

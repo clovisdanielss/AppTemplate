@@ -7,7 +7,13 @@ namespace AppTemplate.Application.Validators
     {
         public UserValidator()
         {
-            RuleFor(x => x.UserName).Length(3, 10);
+            RuleFor(x => x.UserName)
+                .NotEmpty()
+                .WithMessage("O nome de usuário não pode ser vazio.")
+                .EmailAddress()
+                .WithMessage("O nome de usuário precisa ser um email.")
+                .Length(5, 100)
+                .WithMessage("O nome de usuário deve ter entre 5 e 100 caracteres");
         }
 
     }
