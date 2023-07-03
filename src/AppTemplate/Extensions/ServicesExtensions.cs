@@ -12,9 +12,11 @@ namespace AppTemplate.Extensions
         {
             service.AddScoped<IUserRepository, MockUserRepository>();
             service.AddScoped<IRoleRepository, MockRoleRepository>();
+            service.AddScoped<IClaimRepository, MockClaimRepository>();
             service.AddScoped<IProcedure<UsernameAndPassword>, CreateUserService>();
-            service.AddScoped<IService<Jwt>, GenerateJwtService>();
+            service.AddScoped<IService<User,Jwt>, GenerateJwtService>();
             service.AddScoped<INotifier, NotifierService>();
+            service.AddScoped<IProcedure<Claim>, CreateClaimService>();
 
             return service;
         }

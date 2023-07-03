@@ -16,26 +16,39 @@ public class TestController : MainController
     {
     }
 
-    [HttpGet]
-    public async Task<ActionResult> GetHelloWorld(UsernameAndPassworModel model, [FromServices] IService<Jwt> service)
+    [HttpGet("get-token-first-user")]
+    public async Task<ActionResult> GetTokenFromFirstUser([FromServices] IService<User,Jwt> service, [FromServices] IUserRepository repository)
     {
-        return CustomResponse(await service.HandleAsync());
+        var users = await repository.GetAll();
+        var user = users.FirstOrDefault();
+        return CustomResponse(await service.HandleAsync(user));
     }
+    
+    [HttpPost("insert-claim-to-first-user")]
+    public async Task<ActionResult> InserClaimToFirstUser(CreateClaimModel model, [FromServices] IUserRepository repository, [FromServices] IProcedure<Claim> service)
+    {
+        var users = await repository.GetAll();
+        var input = _mapper.Map<Claim>(model);
+        input.UserId = users.FirstOrDefault()?.Id;
+        await service.HandleAsync(input);
+        return CustomResponse(success: (r) => Created("",r));
+    }
+
     [Authorize]
-    [HttpGet("teste/auth")]
+    [HttpGet("auth")]
     public async Task<ActionResult> GetHelloWorldAuth()
     {
         return CustomResponse("Hello World - Authorized");
     }
 
-    [HttpPost("CreateUser")]
+    [HttpPost("create-user")]
     public async Task<ActionResult> GetCreatedUser(UsernameAndPassworModel model, [FromServices] IProcedure<UsernameAndPassword> service)
     {
         var input = _mapper.Map<UsernameAndPassword>(model);
         await service.HandleAsync(input);
         return CustomResponse(success: (result) => Created("", result));
     }
-    [HttpGet("AllUsers")]
+    [HttpGet("all-users")]
     public async Task<ActionResult> GetAllUsers([FromServices] IUserRepository service)
     {
         return CustomResponse(await service.GetAll());
