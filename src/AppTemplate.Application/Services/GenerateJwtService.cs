@@ -40,7 +40,8 @@ public class GenerateJwtService : IService<User,Jwt>
             CopyClaims(result, roleClaims);
         }
         result.Add(new SecurityClaim(JwtRegisteredClaimNames.Email, user.Email));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Sid, sessionGuid.ToString()));
+        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Jti, sessionGuid.ToString()));
+        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()));
         return result;
     }
 
@@ -61,7 +62,9 @@ public class GenerateJwtService : IService<User,Jwt>
                       _jwtConfig.ValidAudience,
                       claims,
                       expires: DateTime.UtcNow.AddMinutes(_jwtConfig.ExpirationTime),
-                      signingCredentials: credentials);
+                      notBefore: DateTime.UtcNow,
+                      signingCredentials: credentials
+                      );
         string tokenWrited = new JwtSecurityTokenHandler().WriteToken(token);
         return new Jwt
         {
