@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using SecurityClaim = System.Security.Claims.Claim;
+using ClaimValueTypes = System.Security.Claims.ClaimValueTypes;
 using System.Text;
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
@@ -40,8 +41,10 @@ public class GenerateJwtService : IService<User,Jwt>
             CopyClaims(result, roleClaims);
         }
         result.Add(new SecurityClaim(JwtRegisteredClaimNames.Email, user.Email));
+        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
         result.Add(new SecurityClaim(JwtRegisteredClaimNames.Jti, sessionGuid.ToString()));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()));
+        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Nbf, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64));
+        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64));
         return result;
     }
 
@@ -55,17 +58,20 @@ public class GenerateJwtService : IService<User,Jwt>
 
     private Jwt Generate(IEnumerable<SecurityClaim> claims, Guid sessionGuid)
     {
+        var handler = new JwtSecurityTokenHandler();
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_jwtConfig.Secret));
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
-        JwtSecurityToken token = new(
-                      _jwtConfig.Issuer,
-                      _jwtConfig.ValidAudience,
-                      claims,
-                      expires: DateTime.UtcNow.AddMinutes(_jwtConfig.ExpirationTime),
-                      notBefore: DateTime.UtcNow,
-                      signingCredentials: credentials
-                      );
-        string tokenWrited = new JwtSecurityTokenHandler().WriteToken(token);
+        var token = handler.CreateToken(new()
+        {
+            Issuer = _jwtConfig.Issuer,
+            Audience = _jwtConfig.ValidAudience,
+            Subject = new(claims),
+            Expires = DateTime.UtcNow.AddMinutes(_jwtConfig.ExpirationTime),
+            SigningCredentials = credentials
+        });
+
+        string tokenWrited = handler.WriteToken(token);
+        
         return new Jwt
         {
             Id = sessionGuid,
