@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AppTemplate.Application.Services
 {
-    public class CreateClaimService : AbstractService, IProcedure<Claim>
+    public class CreateClaimService : AbstractService, ICreateClaimService
     {
         private readonly IClaimRepository _claimRepository;
         private readonly IUserRepository _userRepository;

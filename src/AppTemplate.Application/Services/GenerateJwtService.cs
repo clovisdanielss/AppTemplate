@@ -6,15 +6,15 @@ using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using AppTemplate.Application.Interfaces;
+using AppTemplate.Shared.AbstractClasses;
+using AppTemplate.Application.Factory;
 
 namespace AppTemplate.Application.Services;
-
-
-public class GenerateJwtService : IService<User,Jwt>
+public class GenerateJwtService : AbstractService, IGenerateJwtService
 {
     private readonly IJwtConfiguration _jwtConfig;
     private readonly IClaimRepository _claimRepository;
-    public GenerateJwtService(IJwtConfiguration jwtConfig, IClaimRepository claimRepository)
+    public GenerateJwtService(IJwtConfiguration jwtConfig, IClaimRepository claimRepository, INotifier notifier):base(notifier)
     {
         _jwtConfig = jwtConfig ?? throw new ArgumentNullException(nameof(jwtConfig));
         _claimRepository = claimRepository;
@@ -22,40 +22,19 @@ public class GenerateJwtService : IService<User,Jwt>
 
     public async Task<Jwt> HandleAsync(User user)
     {
-        var sessionGuid = Guid.NewGuid();
-        var claims = await GetClaimsAsync(user, sessionGuid);
-        return Generate(claims.AsEnumerable(), sessionGuid);
-    }
-
-    private async Task<IEnumerable<SecurityClaim>> GetClaimsAsync(User user, Guid sessionGuid)
-    {
-        List<SecurityClaim> result = new List<SecurityClaim>();
-        var userClaims = await _claimRepository.GetClaimsFromUser(user.Id);
-        if (userClaims != null)
+        try
         {
-            CopyClaims(result, userClaims);
+            var sessionGuid = Guid.NewGuid();
+            var factory = new ClaimFactory(_claimRepository);
+            var claims = await factory.CreateClaims(user, sessionGuid);
+            return Generate(claims.AsEnumerable(), sessionGuid);
         }
-        var roleClaims = await _claimRepository.GetClaimsFromRole(user.RoleId);
-        if(roleClaims != null)
+        catch
         {
-            CopyClaims(result, roleClaims);
-        }
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Email, user.Email));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Jti, sessionGuid.ToString()));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Nbf, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64));
-        result.Add(new SecurityClaim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64));
-        return result;
-    }
-
-    private static void CopyClaims(List<SecurityClaim> claimsDest, IEnumerable<Claim> claimsSrc)
-    {
-        foreach (var claim in claimsSrc)
-        {
-            claimsDest.Add(new SecurityClaim(claim.ClaimName, claim.ClaimValue));
+            Notify("Erro interno ao criar token");
+            return null;
         }
     }
-
     private Jwt Generate(IEnumerable<SecurityClaim> claims, Guid sessionGuid)
     {
         var handler = new JwtSecurityTokenHandler();

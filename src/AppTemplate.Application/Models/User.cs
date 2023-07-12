@@ -8,7 +8,7 @@ namespace AppTemplate.Application.Models
         public Guid RoleId { get; set; }
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
-        public string Email { get; set; }
+        public string Email => UserName;
         public bool LockoutEnabled { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; }
         public int AccessFailedCount { get; set; }

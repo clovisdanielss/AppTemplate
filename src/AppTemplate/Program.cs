@@ -1,3 +1,5 @@
+using AppTemplate.Application.Extensions;
+using AppTemplate.Data.Extensions;
 using AppTemplate.Extensions;
 using AppTemplate.Models;
 using AppTemplate.Shared.Interfaces;
@@ -18,7 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 builder.Services.AddSingleton(configuration);
 builder.Services.AddJwt(configuration);
-builder.Services.AddServices();
+builder.Services.AddMockRepository();
+builder.Services.AddAuthServices();
 builder.Services.AddProfiles();
 
 var app = builder.Build();

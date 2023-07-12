@@ -6,7 +6,7 @@ using AppTemplate.Shared.Interfaces;
 
 namespace AppTemplate.Application.Services;
 
-public class CreateUserService : AbstractService, IProcedure<UsernameAndPassword>
+public class CreateUserService : AbstractService, ICreateUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IRoleRepository _roleRepository;
@@ -19,11 +19,16 @@ public class CreateUserService : AbstractService, IProcedure<UsernameAndPassword
     }
     public async Task HandleAsync(UsernameAndPassword input)
     {
+        var user = await _userRepository.GetByUsername(input.UserName);
+        if(user != null)
+        {
+            Notify("Usuário cadastrado com esse nome já existe.");
+            return;
+        }
         if (!await IsValid(new UsernameAndPasswordValidator(), input)) return;
         var hashString = PasswordHasher.GeneratePasswordHashString(input.Password);
-        var user = new User
+        user = new User
         {
-            Email = input.UserName,
             UserName = input.UserName,
             PasswordHash = hashString,
         };
