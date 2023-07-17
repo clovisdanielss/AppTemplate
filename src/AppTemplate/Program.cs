@@ -18,10 +18,9 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
-builder.Services.AddSingleton(configuration);
 builder.Services.AddJwt(configuration);
 builder.Services.AddMockRepository();
-builder.Services.AddAuthServices();
+builder.Services.AddAuthServices(configuration);
 builder.Services.AddProfiles();
 
 var app = builder.Build();
