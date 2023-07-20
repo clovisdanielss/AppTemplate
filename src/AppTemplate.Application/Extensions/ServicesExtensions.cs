@@ -11,6 +11,7 @@ namespace AppTemplate.Application.Extensions
     {
         public static IServiceCollection AddAuthServices(this IServiceCollection service, IJwtConfiguration config = null)
         {
+            service.TryAddScoped<INotifier, NotifierService>();
             service.AddHttpContextAccessor();
             if (config != null)
             {
@@ -20,8 +21,7 @@ namespace AppTemplate.Application.Extensions
             }
             service.AddScoped<ICreateUserService, CreateUserService>();
             service.AddScoped<IGetUserByPasswordService, GetUserByPasswordService>();
-            service.AddScoped<ISignInService, SignInService>();
-            service.TryAddScoped<INotifier, NotifierService>();
+            service.AddScoped<ISignInService, SignInService>();;
             service.AddScoped<ICreateClaimService, CreateClaimService>();
 
             return service;
