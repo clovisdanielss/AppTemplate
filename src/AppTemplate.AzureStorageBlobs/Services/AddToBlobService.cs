@@ -27,8 +27,9 @@ namespace AppTemplate.AzureStorageBlobs.Services
                     Notify("Não existe arquivo selecionado para upload.");
                     return string.Empty;
                 }
-                var fileName = Guid.NewGuid().ToString()+"."+ input.Ext;
-                var dataArray = Convert.FromBase64String(input.Base64);
+                var fileName = Guid.NewGuid().ToString()+ "."+ input.Ext;
+                var dataArray = Convert.FromBase64String(input.Base64.Contains(",") ? input.Base64.Split(",")[^1] : input.Base64);
+
                 Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> response = await _client.UploadBlobAsync(fileName, new MemoryStream(dataArray));
                 if (response != null)
                 {
