@@ -35,7 +35,7 @@ namespace AppTemplate.Controllers
                         { "ModelStateMessages", modelStateMessages.ToArray() },
                     }));
             }
-            if(success == null)
+            if (success == null)
             {
                 return Ok(result);
             }

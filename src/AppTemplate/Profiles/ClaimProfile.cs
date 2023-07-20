@@ -4,7 +4,7 @@ using AutoMapper;
 
 namespace AppTemplate.Profiles
 {
-    public class ClaimProfile: Profile
+    public class ClaimProfile : Profile
     {
         public ClaimProfile()
         {

@@ -22,7 +22,7 @@ internal class ClaimFactory
     }
     public async Task<ClaimsIdentity> CreateClaimsIdentity(User user, Guid sessionGuid, bool useCookie)
     {
-        if(!useCookie)
+        if (!useCookie)
             return new(await CreateClaims(user, sessionGuid));
         else
             return new(await CreateClaims(user, sessionGuid), CookieAuthenticationDefaults.AuthenticationScheme);

@@ -20,7 +20,7 @@ public class CreateUserService : AbstractService, ICreateUserService
     public async Task HandleAsync(UsernameAndPassword input)
     {
         var user = await _userRepository.GetByUsername(input.UserName);
-        if(user != null)
+        if (user != null)
         {
             Notify("Usuário cadastrado com esse nome já existe.");
             return;

@@ -25,7 +25,7 @@ public class TestController : MainController
         var user = users.FirstOrDefault();
         return CustomResponse(await service.HandleAsync(user));
     }
-    
+
     [HttpPost("insert-claim-to-first-user")]
     public async Task<ActionResult> InserClaimToFirstUser(CreateClaimModel model, [FromServices] IUserRepository repository, [FromServices] ICreateClaimService service)
     {
@@ -33,7 +33,7 @@ public class TestController : MainController
         var input = _mapper.Map<Claim>(model);
         input.UserId = users.FirstOrDefault()?.Id;
         await service.HandleAsync(input);
-        return CustomResponse(success: (r) => Created("",r));
+        return CustomResponse(success: (r) => Created("", r));
     }
 
     [Authorize]

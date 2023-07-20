@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppTemplate.Shared", "src\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppTemplate.Application", "src\AppTemplate.Application\AppTemplate.Application.csproj", "{485EB907-7E59-436B-8A19-C4F2F716EBCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppTemplate.Tests", "tests\AppTemplate.Tests\AppTemplate.Tests.csproj", "{19B9B888-8A61-423B-96C2-1271203DD01F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppTemplate.Tests", "tests\AppTemplate.Tests\AppTemplate.Tests.csproj", "{19B9B888-8A61-423B-96C2-1271203DD01F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppTemplate.AzureStorageBlobs", "src\AppTemplate.AzureStorageBlobs\AppTemplate.AzureStorageBlobs.csproj", "{6C2FBEB0-ACBA-4114-ADDD-A74E9A5200CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{19B9B888-8A61-423B-96C2-1271203DD01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19B9B888-8A61-423B-96C2-1271203DD01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19B9B888-8A61-423B-96C2-1271203DD01F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2FBEB0-ACBA-4114-ADDD-A74E9A5200CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2FBEB0-ACBA-4114-ADDD-A74E9A5200CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2FBEB0-ACBA-4114-ADDD-A74E9A5200CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2FBEB0-ACBA-4114-ADDD-A74E9A5200CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

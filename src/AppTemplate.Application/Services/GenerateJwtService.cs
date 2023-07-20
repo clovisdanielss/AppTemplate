@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using SecurityClaim = System.Security.Claims.Claim;
-using ClaimValueTypes = System.Security.Claims.ClaimValueTypes;
 using System.Text;
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.Interfaces;
@@ -14,7 +13,7 @@ public class GenerateJwtService : AbstractService, IGenerateJwtService
 {
     private readonly IJwtConfiguration _jwtConfig;
     private readonly IClaimRepository _claimRepository;
-    public GenerateJwtService(IJwtConfiguration jwtConfig, IClaimRepository claimRepository, INotifier notifier):base(notifier)
+    public GenerateJwtService(IJwtConfiguration jwtConfig, IClaimRepository claimRepository, INotifier notifier) : base(notifier)
     {
         _jwtConfig = jwtConfig ?? throw new ArgumentNullException(nameof(jwtConfig));
         _claimRepository = claimRepository;
@@ -50,7 +49,7 @@ public class GenerateJwtService : AbstractService, IGenerateJwtService
         });
 
         string tokenWrited = handler.WriteToken(token);
-        
+
         return new Jwt
         {
             Id = sessionGuid,

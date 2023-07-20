@@ -2,11 +2,6 @@
 using AppTemplate.Application.Models;
 using AppTemplate.Shared.AbstractClasses;
 using AppTemplate.Shared.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppTemplate.Application.Services
 {
@@ -21,7 +16,7 @@ namespace AppTemplate.Application.Services
         public async Task<User> HandleAsync(UsernameAndPassword input)
         {
             var user = await _userRepository.GetByUsername(input.UserName);
-            if(user == null || !PasswordHasher.VerifyPassword(user.PasswordHash, input.Password))
+            if (user == null || !PasswordHasher.VerifyPassword(user.PasswordHash, input.Password))
             {
                 Notify("Usuário ou senha incorretos");
                 return null;

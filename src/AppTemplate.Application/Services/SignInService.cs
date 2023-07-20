@@ -6,12 +6,6 @@ using AppTemplate.Shared.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppTemplate.Application.Services
 {
@@ -44,7 +38,7 @@ namespace AppTemplate.Application.Services
                 {
                     ExpiresUtc = DateTimeOffset.UtcNow.AddHours(EXPIRATION_TIME),
                     IsPersistent = true
-            });
+                });
         }
     }
 }
