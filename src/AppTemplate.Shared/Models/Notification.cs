@@ -1,6 +1,6 @@
 ﻿using AppTemplate.Shared.Interfaces;
 
-namespace AppTemplate.Application.Models
+namespace AppTemplate.Shared.Models
 {
     public class Notification : INotification
     {

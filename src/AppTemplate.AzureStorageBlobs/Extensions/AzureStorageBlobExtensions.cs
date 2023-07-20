@@ -1,6 +1,8 @@
 ﻿using AppTemplate.AzureStorageBlobs.Interfaces;
 using AppTemplate.AzureStorageBlobs.Services;
+using AppTemplate.Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AppTemplate.AzureStorageBlobs.Extensions
 {
@@ -11,6 +13,7 @@ namespace AppTemplate.AzureStorageBlobs.Extensions
             services.AddSingleton(configuration);
             services.AddScoped<IAddToBlobService, AddToBlobService>();
             services.AddScoped<IRemoveFromBlobService, RemoveFromBlobService>();
+            services.TryAddScoped<INotifier, INotifier>();
 
             return services;
         }

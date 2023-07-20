@@ -1,7 +1,7 @@
-using AppTemplate.Application.Models;
+using AppTemplate.Shared.Models;
 using AppTemplate.Shared.Interfaces;
 
-namespace AppTemplate.Application.Services;
+namespace AppTemplate.Shared.Services;
 
 public class NotifierService : INotifier
 {
