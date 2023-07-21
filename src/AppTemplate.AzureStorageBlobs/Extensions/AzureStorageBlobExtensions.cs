@@ -15,7 +15,7 @@ namespace AppTemplate.AzureStorageBlobs.Extensions
             services.AddSingleton(configuration);
             services.AddScoped<IAddToBlobService, AddToBlobService>();
             services.AddScoped<IRemoveFromBlobService, RemoveFromBlobService>();
-          
+
             return services;
         }
     }
