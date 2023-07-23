@@ -1,4 +1,6 @@
 ﻿using AppTemplate.Shared.Interfaces;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace AppTemplate.Data.Repositories
 {
@@ -42,6 +44,18 @@ namespace AppTemplate.Data.Repositories
         {
             await DeleteById(entity.Id);
             await Add(entity);
+        }
+
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
+        {
+            var result = repository.Where(expression.Compile());
+            return result;
+        }
+
+        public async Task<int> Count(Expression<Func<T, bool>> expression)
+        {
+            var result = repository.Where(expression.Compile()).Count();
+            return result;
         }
     }
 }

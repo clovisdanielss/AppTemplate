@@ -1,6 +1,7 @@
 ﻿using AppTemplate.Data.MongoDB.Interfaces;
 using AppTemplate.Shared.Interfaces;
 using MongoDB.Driver;
+using System.Linq.Expressions;
 
 namespace AppTemplate.Data.MongoDB.Repositories
 {
@@ -38,10 +39,21 @@ namespace AppTemplate.Data.MongoDB.Repositories
             return result.FirstOrDefault();
         }
 
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
+        {
+            var result = await _collection.FindAsync(expression);
+            return result.ToEnumerable();
+        }
+
+        public async Task<int> Count(Expression<Func<T, bool>> expression)
+        {
+            var result = await _collection.CountDocumentsAsync(expression);
+            return (int)result;
+        }
+
         public async Task Update(T entity)
         {
-            await DeleteById(entity.Id);
-            await Add(entity);
+            await _collection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
         }
     }
 

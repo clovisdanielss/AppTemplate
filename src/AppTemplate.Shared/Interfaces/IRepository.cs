@@ -1,4 +1,6 @@
-﻿namespace AppTemplate.Shared.Interfaces;
+﻿using System.Linq.Expressions;
+
+namespace AppTemplate.Shared.Interfaces;
 public interface IRepository<T>
 {
     Task<T> GetById(Guid id);
@@ -6,4 +8,6 @@ public interface IRepository<T>
     Task DeleteById(Guid id);
     Task<IEnumerable<T>> GetAll();
     Task Add(T item);
+    Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
+    Task<int> Count(Expression<Func<T, bool>> expression);
 }
