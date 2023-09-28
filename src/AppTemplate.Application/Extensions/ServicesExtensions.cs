@@ -21,7 +21,7 @@ namespace AppTemplate.Application.Extensions
             }
             service.AddScoped<ICreateUserService, CreateUserService>();
             service.AddScoped<IGetUserByPasswordService, GetUserByPasswordService>();
-            service.AddScoped<ISignInService, SignInService>(); ;
+            service.AddScoped<ISignInService, SignInService>();
             service.AddScoped<ICreateClaimService, CreateClaimService>();
 
             return service;
