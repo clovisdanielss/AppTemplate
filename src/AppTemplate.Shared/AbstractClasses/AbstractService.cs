@@ -11,9 +11,10 @@ namespace AppTemplate.Shared.AbstractClasses
             _notifier = notifier;
         }
 
-        protected void Notify(string notification)
+        protected virtual void Notify(string notification)
         {
             _notifier.Notify(notification);
+            //adicionar chamada para serviço de logger aqui. Garantindo limpeza e responsabilidade única.
         }
 
         protected virtual async Task<bool> IsValid<V, E>(V validator, E entity) where V : IValidator<E>
