@@ -2,6 +2,7 @@ using AppTemplate.Application.Extensions;
 using AppTemplate.Data.Extensions;
 using AppTemplate.Extensions;
 using AppTemplate.Models;
+using AppTemplate.Payment.Subscriptions.Efi.Extensions;
 using AppTemplate.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,12 @@ builder.Services.AddJwt(configuration);
 builder.Services.AddMockRepository();
 builder.Services.AddAuthServices(configuration);
 builder.Services.AddProfiles();
-
+builder.Services.AddEfi(new()
+{
+    ClientId = builder.Configuration.GetSection("EfiClientId").Value,
+    ClientSecret = builder.Configuration.GetSection("EfiClientSecret").Value,
+    IsSandbox = true
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

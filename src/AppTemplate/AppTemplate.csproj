@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>69bf01ce-eb38-4d8d-8cf7-228343797364</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AppTemplate.Application\AppTemplate.Application.csproj" />
     <ProjectReference Include="..\AppTemplate.Data\AppTemplate.Data.csproj" />
+    <ProjectReference Include="..\AppTemplate.Payment.Subscriptions.Efi\AppTemplate.Payment.Subscriptions.Efi.csproj" />
+    <ProjectReference Include="..\AppTemplate.Payment.Subscriptions\AppTemplate.Payment.Subscriptions.csproj" />
   </ItemGroup>
 
 </Project>

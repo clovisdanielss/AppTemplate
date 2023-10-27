@@ -18,7 +18,7 @@ namespace AppTemplate.Controllers
             _notifier = notifier;
         }
 
-        public bool HasAnyError => _notifier.GetNotifications().Count > 0 || ModelState.Count > 0;
+        public bool HasAnyError => _notifier.GetNotifications().Count > 0 || ModelState.ErrorCount > 0;
 
         protected ActionResult CustomResponse(object result = null, Func<object, ActionResult> success = null)
         {
